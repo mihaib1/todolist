@@ -96,3 +96,12 @@ function deselectRow(selector){
         element.classList.remove("selected");
     })
 }
+
+
+
+let testbtn = document.createElement('button');
+testbtn.textContent = "test";
+testbtn.addEventListener("click", function(event){
+    console.log(todolist);
+})
+document.body.append(testbtn);

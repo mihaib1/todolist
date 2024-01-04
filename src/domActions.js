@@ -19,6 +19,42 @@ projectsArray.forEach(function(element){
 
 */
 
+class Button {
+    constructor(rowData){
+        this.rowData = rowData;
+        this.element = document.createElement("button");
+    }
+
+    setDeleteAction() {
+        let rowData = this.rowData;
+        this.element.textContent = "❌";
+        this.element.classList.add("deleteBtn");
+        //this.element.addEventListener("click", function(event){console.log(rowData)}) -> could add eventListener directly here;
+        // event listener to show modal maybe?
+        // other features specific to delete btn?
+    }
+
+    setEditAction() {
+        this.element.textContent = "✏️"
+        this.element.addEventListener("click", function(event){console.log("click")})
+    }
+
+    setCompleteAction() {
+        let rowData = this.rowData;
+        this.element.textContent = '✅';
+        this.element.addEventListener("click", function(event){
+            if(rowData.isComplete) {
+                rowData.isComplete = false;
+                console.log("Changed to false");
+            } else {
+                rowData.isComplete = true;
+                console.log("Changed complete status to true");
+            }
+        })
+    }
+
+}
+
 function generateProjectAndChildrenTree(projectFolder) {
 
     let projectContainer = document.createElement("div");
@@ -44,9 +80,7 @@ function generateProjectAndChildrenTree(projectFolder) {
         title.classList.add("note-title");
         title.textContent = element.title;
 
-        let buttonsContainer = document.createElement("div");
-        buttonsContainer.classList.add("btnContainer");
-        buttonsContainer.textContent = "btnPlaceholder";
+        let buttonsContainer = createButtonsContainer(element);
 
         listElement.append(title, buttonsContainer);
         notesList.appendChild(listElement);
@@ -54,6 +88,25 @@ function generateProjectAndChildrenTree(projectFolder) {
     projectContainer.append(notesList);
     return projectContainer;
 }
+
+function createButtonsContainer(rowData) {
+    let buttonsContainer = document.createElement("div");
+    buttonsContainer.classList.add("btnContainer");
+
+    let deleteBtn = new Button(rowData);
+    deleteBtn.setDeleteAction();
+    deleteBtn.element.addEventListener("click", function(event){
+        console.log("Are you sure you want to delete note " + deleteBtn.rowData.title + " from folder " + deleteBtn.rowData.projectName);
+    });
+
+    let completeBtn = new Button(rowData);
+    completeBtn.setCompleteAction();
+    buttonsContainer.append(deleteBtn.element, completeBtn.element);
+
+    return buttonsContainer;
+}
+
+
 
 function generateGrid() {
     let wrapper = document.createElement("div");

@@ -4,10 +4,11 @@ class ToDoList {
     itemId = generateGUID();
     createdOn = new Date();
     isComplete = false;
-    constructor(project){
+    constructor(project, description){
         this.projectName = !isNullOrEmpty(project) ? project.displayName : defaultsFolder.displayName;
         this.projectId = project.projectId;
         project.toDos.push(this);
+        this.description = description;
     }
 
     changeCompletionStatus = function() {
