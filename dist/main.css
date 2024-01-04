@@ -1,0 +1,61 @@
+/*!*****************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/style.css ***!
+  \*****************************************************************/
+.wrapper{
+    display: grid;
+    background-color: aqua;
+    table-layout: fixed;
+    row-gap: 0;
+}
+
+.projects-list{
+    display:grid;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    border-color: black;
+    border-right-width: 4px;
+    border-right-style:double;
+    background-color: azure;
+}
+
+.note-screen{
+    display: flex;
+    flex-direction: column;
+    grid-column-start: 2;
+    grid-column-end: 7;
+    background-color: blueviolet;
+}
+
+.project-title{
+    padding: 8px;
+    display:flex;
+}
+
+.project-title.selected{
+    background-color: brown;
+}
+
+.project-title:hover{
+    background-color: blueviolet;
+}
+
+.hidden {
+    display: none;
+}
+
+.list-element{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding-bottom: 1em;
+}
+
+.note-title{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width:30ch;
+}
+
+.btnContainer{
+    padding-right:0.5em;
+}
