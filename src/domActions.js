@@ -102,7 +102,7 @@ function generateProjectAndChildrenTree(projectFolder) {
 
         if(element.isComplete){
             listElement.classList.add("complete");
-        }  
+        }
 
         listElement.append(title, buttonsContainer);
         notesList.appendChild(listElement);
