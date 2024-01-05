@@ -13,6 +13,7 @@ import './style.css'
 let defaultsFolder = createProject("My Projects");
 let todolist = new ToDoList(defaultsFolder);
 todolist.title = "Titlu proiect lorem ipsum asakdbsadbsajkdsnaladsalda sandldnal lsdladljl";
+todolist.isComplete = true;
 let newtodo = new ToDoList(defaultsFolder);
 newtodo.title = "bebababa"
 
@@ -24,6 +25,8 @@ poo.title = "bb";
 
 
 // *** STOP DATA FOR TESTING
+
+generateGrid();
 
 function createNote() {
     // get the selected folder (IF ANY) -> will be stored in a variable called selectedFolder; -> need to use HTML here
@@ -75,28 +78,6 @@ field.addEventListener("keyup", function(element){
 
 // 1. Folder rename / delete / creation
 // 2. To do list element update / delete / creation
-
-
-generateGrid();
-
-
-let titles = document.querySelectorAll("div.project-title");
-titles.forEach(function(title){
-    title.addEventListener("click", function(event){
-        deselectRow(titles);
-        event.target.classList.add("selected");
-        let toDolist = event.target.nextSibling;
-        showHideElement(toDolist);
-        // should make this function so that it only toggles the display for the... for the what??
-    })
-})
-
-function deselectRow(selector){
-    selector.forEach(function(element){
-        element.classList.remove("selected");
-    })
-}
-
 
 
 let testbtn = document.createElement('button');

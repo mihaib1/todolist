@@ -56,3 +56,7 @@
 .btnContainer{
     padding-right:0.5em;
 }
+
+.list-element.complete{
+    background-color: green;
+}

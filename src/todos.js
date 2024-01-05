@@ -14,7 +14,9 @@ class ToDoList {
     changeCompletionStatus = function() {
         if(this.isComplete) {
             this.isComplete = false;
-        } else this.isComplete = true;
+        } else {
+            this.isComplete = true;
+        }
     }
 
     changePriority = function(priority) {

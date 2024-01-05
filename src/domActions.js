@@ -7,18 +7,6 @@ appContainer.classList.add("container");
 let sidebar = document.createElement("div");
 sidebar.classList.add("sidebar");
 
-
-
-/*  
-
-projectsArray.forEach(function(element){
-    generateProjectAndChildrenTree(projectFolder);
-})
-
-*** Acest forEach ar trebui dus in index.js ***
-
-*/
-
 class Button {
     constructor(rowData){
         this.rowData = rowData;
@@ -35,24 +23,54 @@ class Button {
     }
 
     setEditAction() {
-        this.element.textContent = "✏️"
-        this.element.addEventListener("click", function(event){console.log("click")})
+        this.element.textContent = "✏️";
+        this.element.addEventListener("click", function(event){console.log("clicked EDIT")})
     }
 
     setCompleteAction() {
         let rowData = this.rowData;
-        this.element.textContent = '✅';
+        this.element.textContent = '✅'
+        this.element.classList.add("edit-btn");
         this.element.addEventListener("click", function(event){
-            if(rowData.isComplete) {
-                rowData.isComplete = false;
-                console.log("Changed to false");
-            } else {
-                rowData.isComplete = true;
-                console.log("Changed complete status to true");
-            }
+            rowData.changeCompletionStatus();
+            generateGrid();
         })
     }
+}
 
+
+
+function generateGrid() {
+
+    let container = document.getElementById("grid-container");
+    container.innerHTML = "";
+    let wrapper = document.createElement("div");
+    wrapper.classList.add("wrapper");
+
+    let projectsList = document.createElement("div")
+    projectsList.classList.add("projects-list");
+
+    let noteDetails = document.createElement("div");
+    noteDetails.classList.add("note-screen");
+
+    wrapper.append(projectsList, noteDetails);
+    let listDataDiv = createProjectsList();
+    projectsList.append(listDataDiv);
+    container.append(wrapper);
+    addTitleBehaviour();
+}
+
+function createProjectsList () {
+    let listDiv = document.createElement("div");
+    if(!isNullOrEmpty(projectsArray)){
+        projectsArray.forEach(function(project){
+            let projectFolder = generateProjectAndChildrenTree(project);
+            listDiv.append(projectFolder);
+        });
+    } else {
+        alert("No projects found!");
+    }
+    return listDiv;
 }
 
 function generateProjectAndChildrenTree(projectFolder) {
@@ -82,6 +100,10 @@ function generateProjectAndChildrenTree(projectFolder) {
 
         let buttonsContainer = createButtonsContainer(element);
 
+        if(element.isComplete){
+            listElement.classList.add("complete");
+        }  
+
         listElement.append(title, buttonsContainer);
         notesList.appendChild(listElement);
     });
@@ -104,37 +126,6 @@ function createButtonsContainer(rowData) {
     buttonsContainer.append(deleteBtn.element, completeBtn.element);
 
     return buttonsContainer;
-}
-
-
-
-function generateGrid() {
-    let wrapper = document.createElement("div");
-    wrapper.classList.add("wrapper");
-
-    let projectsList = document.createElement("div")
-    projectsList.classList.add("projects-list");
-
-    let noteDetails = document.createElement("div");
-    noteDetails.classList.add("note-screen");
-
-    wrapper.append(projectsList, noteDetails);
-    let listDataDiv = createProjectsList();
-    projectsList.append(listDataDiv);
-    document.body.append(wrapper); 
-}
-
-function createProjectsList () {
-    let listDiv = document.createElement("div");
-    if(!isNullOrEmpty(projectsArray)){
-        projectsArray.forEach(function(project){
-            let projectFolder = generateProjectAndChildrenTree(project);
-            listDiv.append(projectFolder);
-        });
-    } else {
-        alert("No projects found!");
-    }
-    return listDiv;
 }
 
 function showHideElement(element){
@@ -161,6 +152,24 @@ function getAllHTMLClasses(selector){
     } else console.error("No selector found!");
 
     return htmlClassesArray;
+}
+
+function addTitleBehaviour(){
+    let titles = document.querySelectorAll("div.project-title");
+    titles.forEach(function(title){
+        title.addEventListener("click", function(event){
+            deselectRow(titles);
+            event.target.classList.add("selected");
+            let toDolist = event.target.nextSibling;
+            showHideElement(toDolist);
+        })
+    })
+}
+
+function deselectRow(selector){
+    selector.forEach(function(element){
+        element.classList.remove("selected");
+    })
 }
 
 export {generateProjectAndChildrenTree, generateGrid, showHideElement};
